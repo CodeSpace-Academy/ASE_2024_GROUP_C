@@ -1,14 +1,17 @@
-const fetchRecipes = async () => {
-  try {
-    const res = await fetch("https://dummyjson.com/recipes", {cache : 'force-cache'});
-    if (!res.ok) {
-      throw new Error("Fetch Products Failed");
-    }
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.error("Failed to Fetch Data:", error)
-  }
-};
+import { connectMongoose } from "@/lib/connectMongoose";
+import Recipe from "@/models/Recipe";
+import { NextResponse } from "next/server";
 
-export default fetchRecipes;
+export  async function GET(req) {
+
+    try {
+       await connectMongoose()
+       const recipe = await Recipe.find({})
+       console.log(recipe)
+       return NextResponse.json({recipe})
+    } catch (error) {
+        
+    }
+    
+}
+
