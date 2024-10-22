@@ -1,4 +1,5 @@
-import { Link } from "lucide-react";
+'use client'
+import  Link  from "next/link";
 
 
 export default function Error() {
@@ -8,6 +9,7 @@ export default function Error() {
       <h1 className="text-4xl font-bold mb-4">Something went wrong</h1>
       <p className="mb-6 text-lg">An unexpected error occurred. Please try again later.</p>
       <Link
+      href='/'
         className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600"
       >
         Return Home

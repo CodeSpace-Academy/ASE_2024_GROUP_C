@@ -6,7 +6,7 @@ const RecipeCard = ({ recipe }) => {
   return (
     <Link href={`/recipes/${recipe.id}`}>
       <div className="bg-white shadow-md rounded-lg overflow-hidden">
-        <img src={recipe.image} alt={recipe.title} className="w-full h-48 object-cover" />
+        <img src={recipe.images[0]} alt={recipe.title} className="w-full h-48 object-cover" />
         <div className="p-4">
           <h2 className="text-xl font-bold text-gray-800">{recipe.name}</h2>
           <p className="text-gray-600 mt-2">Prep time: {recipe.prepTimeMinutes} mins</p>
