@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"; 
 import fetchSingleRecipe from "../../api/recipe/[id]/route";
+import RecipeSkeleton from "@/app/components/RecipeDetailSkeleton";
 
 
 const formatTime = (minutes) => {
@@ -18,6 +19,10 @@ const RecipeDetail = ({ params }) => {
 
   useEffect(() => {
     const getRecipe = async () => {
+      const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+      // Delay for 2 seconds
+      await delay(4000);
       const data = await fetchSingleRecipe(id);
       if (data) {
         setRecipe(data);
@@ -27,7 +32,7 @@ const RecipeDetail = ({ params }) => {
   }, [id]);
 
   if (!recipe) {
-    return null; 
+    return <RecipeSkeleton/>
   }
 
   const totalTime = recipe.prepTimeMinutes + recipe.cookTimeMinutes;
