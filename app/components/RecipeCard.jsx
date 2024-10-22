@@ -1,3 +1,4 @@
+// app/components/RecipeCard.jsx (rename from RecipeCards.jsx)
 import React from 'react';
 
 const RecipeCard = ({ recipe }) => {
