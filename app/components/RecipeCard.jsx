@@ -1,3 +1,4 @@
+// app/components/RecipeCard.jsx (rename from RecipeCards.jsx)
 import React from 'react';
 import Link from 'next/link';
 
