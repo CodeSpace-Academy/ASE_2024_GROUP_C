@@ -1,6 +1,7 @@
-"use client"
-import { useEffect, useState } from 'react';
-import fetchSingleRecipe from '../../api/recipe/[id]/route'; 
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation"; 
+import fetchSingleRecipe from "../../api/recipe/[id]/route";
 
 
 const formatTime = (minutes) => {
@@ -12,6 +13,8 @@ const formatTime = (minutes) => {
 const RecipeDetail = ({ params }) => {
   const { id } = params;
   const [recipe, setRecipe] = useState(null);
+  const [activeTab, setActiveTab] = useState("ingredients");
+  const router = useRouter(); 
 
   useEffect(() => {
     const getRecipe = async () => {
@@ -23,45 +26,101 @@ const RecipeDetail = ({ params }) => {
     getRecipe();
   }, [id]);
 
-
   if (!recipe) {
-    return null;
+    return null; 
   }
 
- 
   const totalTime = recipe.prepTimeMinutes + recipe.cookTimeMinutes;
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-4">{recipe.name}</h1>
-      
-      <img src={recipe.image} alt={recipe.name} className="w-full h-auto mb-4" />
-      
-      <div className="flex flex-col gap-2 text-lg text-gray-800">
-        <p><strong>Prep Time:</strong> {formatTime(recipe.prepTimeMinutes)}</p>
-        <p><strong>Cook Time:</strong> {formatTime(recipe.cookTimeMinutes)}</p>
-        <p><strong>Total Time:</strong> {formatTime(totalTime)}</p>
-        <p><strong>Servings:</strong> {recipe.servings} servings</p>
-      </div>
-
+    <div className="p-6 max-w-6xl mx-auto font-sans">
      
-      <div className="mt-6">
-        <h2 className="text-2xl font-semibold">Ingredients:</h2>
-        <ul className="list-disc pl-6 mt-2 text-gray-700">
-          {recipe.ingredients.map((ingredient, index) => (
-            <li key={index}>{ingredient}</li>
-          ))}
-        </ul>
-      </div>
+      <button
+        onClick={() => router.back()} 
+        className="text-gray-600 hover:text-gray-900 mb-4 flex items-center"
+      >
+        ← Back
+      </button>
 
+   
+      <div className="grid items-start grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="w-full lg:sticky top-0 flex gap-3">
+          <img
+            src={recipe.image}
+            alt={recipe.name}
+            className="w-3/4 rounded-lg object-cover"
+          />
+        </div>
 
-      <div className="mt-6">
-        <h2 className="text-2xl font-semibold">Instructions:</h2>
-        <ul className="list-disc pl-6 mt-2 text-gray-700">
-          {recipe.instructions.map((instruction, index) => (
-            <li key={index}>{instruction}</li>
-          ))}
-        </ul>
+        <div>
+          
+          <h1 className="text-3xl font-bold mb-2 text-gray-800">
+            {recipe.name}
+          </h1>
+
+ 
+          <p className="text-lg italic text-gray-600 mb-6">
+            Discover how to make this delicious {recipe.name}. Perfect for {recipe.mealType || "any occasion"}.
+          </p>
+
+          <div className="text-lg text-gray-800 space-y-2">
+            <p>
+              <strong>Prep Time:</strong> {formatTime(recipe.prepTimeMinutes)}
+            </p>
+            <p>
+              <strong>Cook Time:</strong> {formatTime(recipe.cookTimeMinutes)}
+            </p>
+            <p>
+              <strong>Total Time:</strong> {formatTime(totalTime)}
+            </p>
+            <p>
+              <strong>Servings:</strong> {recipe.servings} servings
+            </p>
+          </div>
+
+        
+          <ul className="grid grid-cols-2 mt-10 border-b-2">
+            <li
+              className={`text-gray-800 font-semibold text-base text-center py-3 cursor-pointer ${
+                activeTab === "ingredients" ? "border-b-2 border-gray-800" : ""
+              }`}
+              onClick={() => setActiveTab("ingredients")}
+            >
+              Ingredients
+            </li>
+            <li
+              className={`text-gray-800 font-semibold text-base text-center py-3 cursor-pointer ${
+                activeTab === "instructions" ? "border-b-2 border-gray-800" : ""
+              }`}
+              onClick={() => setActiveTab("instructions")}
+            >
+              Instructions
+            </li>
+          </ul>
+
+       
+          <div className="mt-6">
+            {activeTab === "ingredients" ? (
+              <div>
+                <h2 className="text-2xl font-semibold mb-4">Ingredients</h2>
+                <ul className="list-disc pl-6 mt-2 text-gray-700">
+                  {recipe.ingredients.map((ingredient, index) => (
+                    <li key={index}>{ingredient}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <div>
+                <h2 className="text-2xl font-semibold mb-4">Instructions</h2>
+                <ul className="list-disc pl-6 mt-2 text-gray-700">
+                  {recipe.instructions.map((instruction, index) => (
+                    <li key={index}>{instruction}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
