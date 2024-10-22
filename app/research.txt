@@ -1,23 +1,72 @@
-MongoDB notes
-1. No sequal database- We do not use sequal commands to interact with it.
-Sequal data- a data with a relation, be it tables, graphs, rows etc
-But MongoDB uses collections of documents(thus allows for easier handling of unstructured data and faster queries) and stores them in a flexible JSON-like format called BSON(binary JSON)
 
-Practical Example:
-Imagine you’re building a blog. In MongoDB, you might have a collection called posts. Each blog post can be stored as a document with different fields, like:
+MongoDB works by storing data in collections of documents rather than in tables with fixed columns. Here’s a simple breakdown of how it operates, with practical examples:
+
+1. Data Storage:
+Documents: Data is stored as documents in BSON format (similar to JSON). Each document can have varying fields.
+Collection: Documents are grouped into collections, which are like tables in SQL databases.
+Example: In a users collection, you might have documents like:
+
+json
+{
+  "name": "Alice",
+  "email": "alice@example.com",
+  "age": 25
+}
+json
 
 {
-  "title": "My First Blog Post",
-  "content": "This is the content of my first blog post.",
-  "author": "Mmakgosana",
-  "tags": ["mongodb", "blog", "first post"],
-  "created_at": "2024-10-22T12:00:00Z"
+  "name": "Bob",
+  "email": "bob@example.com",
+  "hobbies": ["reading", "gaming"]
 }
+2. Querying:
+You can easily query documents using simple methods. MongoDB uses a query language similar to JavaScript.
+Example: To find all users over 20 years old:
+
+javascript
+
+db.users.find({ age: { $gt: 20 } })
+
+3. Indexing:
+MongoDB can create indexes to improve query performance, making it faster to search through large datasets.
+Example: Creating an index on the email field:
+
+javascript
+db.users.createIndex({ email: 1 })
+
+4. Scalability:
+MongoDB supports horizontal scaling, meaning you can distribute your data across multiple servers as your application grows.
+Example: If your blog starts getting lots of users, you can split your posts collection across several servers to handle more traffic.
+
+Summary:
+MongoDB is designed for flexibility, allowing you to easily store, retrieve, and manage data without rigid structures. It’s especially useful for applications that require rapid development and changing data models!
 
 
 
 Installation and set up
-1. Install MongoDB using the following command in the terminal
+1. Setting up the database
+   1.1 Hosting service- Atlas(MongoDB as a service)
+   1.2 Local setup- MongoDB Compass
 
+   1. Windows Installation
+Download the Installer:
 
+Go to the MongoDB Community Server download page.
+Select your Windows version and click Download.
+Run the Installer:
+
+Open the downloaded .msi file.
+Click Next on the setup wizard.
+Choose Installation Type:
+
+Select Complete for a full installation.
+Configuration:
+
+On the configuration screen, you can choose to run MongoDB as a service. This means it will start automatically when your computer starts.
+Click Next and then Install.
+Finish Installation:
+
+Once installation is complete, you can optionally install MongoDB Compass, which is a GUI for managing your MongoDB databases. Choose whether to install it and finish the setup.
+
+MongoDB shell, which allows us to interact with MongoDB from the terminal
 Implementation
