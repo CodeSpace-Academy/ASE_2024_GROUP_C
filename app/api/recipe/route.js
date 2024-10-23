@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function GET(req) {
   try {
     await connectToDatabase();
-    const recipes = await Recipe.find({}).limit(50);
+    const recipes = await Recipe.find({}).lean().limit(50);
     console.log(recipes)
     return NextResponse.json({ recipes });
   } catch (error) {
