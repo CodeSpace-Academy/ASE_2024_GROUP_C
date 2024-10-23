@@ -1,9 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation"; 
-import fetchSingleRecipe from "../../api/recipe/[id]/route";
+import { useRouter } from "next/navigation";
 import RecipeSkeleton from "../../components/RecipeDetailSkeleton";
-
 
 const formatTime = (minutes) => {
   const hours = Math.floor(minutes / 60);
@@ -13,59 +11,66 @@ const formatTime = (minutes) => {
 
 const RecipeDetail = ({ params }) => {
   const { id } = params;
+  const router = useRouter(); 
+
   const [recipe, setRecipe] = useState(null);
   const [activeTab, setActiveTab] = useState("ingredients");
-  const router = useRouter(); 
+
+  // Log the ID to make sure it's correctly passed
+  console.log("Recipe ID from params:", id);  // Log ID to verify it's correct
 
   useEffect(() => {
     const getRecipe = async () => {
-      const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-      // Delay for 2 seconds
-      await delay(4000);
-      const data = await fetchSingleRecipe(id);
-      if (data) {
-        setRecipe(data);
+      try {
+        if (!id) {
+          console.error("No ID found in params");
+          return;
+        }
+        const response = await fetch(`/api/recipe/${id}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch recipe");
+        }
+        const data = await response.json();
+        console.log(data.recipe,'data')
+        setRecipe(data.recipe);
+      } catch (error) {
+        console.error("Error fetching recipe:", error);
       }
     };
+
     getRecipe();
   }, [id]);
 
   if (!recipe) {
-    return <RecipeSkeleton/>
+    return <RecipeSkeleton />;
   }
 
   const totalTime = recipe.prepTimeMinutes + recipe.cookTimeMinutes;
 
   return (
     <div className="p-6 max-w-6xl mx-auto font-sans">
-     
       <button
-        onClick={() => router.back()} 
+        onClick={() => router.back()}
         className="text-gray-600 hover:text-gray-900 mb-4 flex items-center"
       >
         ← Back
       </button>
 
-   
       <div className="grid items-start grid-cols-1 md:grid-cols-2 gap-6">
         <div className="w-full lg:sticky top-0 flex gap-3">
           <img
-            src={recipe.image}
-            alt={recipe.name}
+            src={recipe.images[0]}
+            alt={recipe.title}
             className="w-3/4 rounded-lg object-cover"
           />
         </div>
 
         <div>
-          
-          <h1 className="text-3xl font-bold mb-2 text-gray-800">
-            {recipe.name}
-          </h1>
+          <h1 className="text-3xl font-bold mb-2 text-gray-800">{recipe.title}</h1>
 
- 
           <p className="text-lg italic text-gray-600 mb-6">
-            Discover how to make this delicious {recipe.name}. Perfect for {recipe.mealType || "any occasion"}.
+            Discover how to make this delicious {recipe.title}. Perfect for{" "}
+            {recipe.mealType || "any occasion"}.
           </p>
 
           <div className="text-lg text-gray-800 space-y-2">
@@ -83,7 +88,6 @@ const RecipeDetail = ({ params }) => {
             </p>
           </div>
 
-        
           <ul className="grid grid-cols-2 mt-10 border-b-2">
             <li
               className={`text-gray-800 font-semibold text-base text-center py-3 cursor-pointer ${
@@ -103,15 +107,14 @@ const RecipeDetail = ({ params }) => {
             </li>
           </ul>
 
-       
           <div className="mt-6">
             {activeTab === "ingredients" ? (
               <div>
                 <h2 className="text-2xl font-semibold mb-4">Ingredients</h2>
                 <ul className="list-disc pl-6 mt-2 text-gray-700">
-                  {recipe.ingredients.map((ingredient, index) => (
+                  {/* {recipe.ingredients.map((ingredient, index) => (
                     <li key={index}>{ingredient}</li>
-                  ))}
+                  ))} */}
                 </ul>
               </div>
             ) : (
