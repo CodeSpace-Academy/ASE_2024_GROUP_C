@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"; 
 import fetchSingleRecipe from "../../api/recipe/[id]/route";
-import RecipeSkeleton from "@/app/components/RecipeDetailSkeleton";
+import RecipeSkeleton from "../../components/RecipeDetailSkeleton";
 
 
 const formatTime = (minutes) => {

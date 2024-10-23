@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import RecipeCard from './RecipeCard'; // Update this import
+import SkeletonGrid from './SkeletonMain';
 
 const RecipeGrid = () => {
   const [recipes, setRecipes] = useState(null);
