@@ -5,28 +5,28 @@ import mongoose from 'mongoose';
 
 export async function GET() {
   try {
-    console.log('123')
-    console.log(Recipe);
+   // console.log('123')
+   // console.log(Recipe);
     
     // Connect to the database
     //await connectToDatabase();
     const db = await connectToDatabase();
-console.log('Connected to:', db.connection.name);  
-    console.log(mongoose.connection.db.databaseName);
-    console.log(Recipe.collection.collectionName);
-    console.log('12345dfg')
+//  console.log('Connected to:', db.connection.name);  
+   // console.log(mongoose.connection.db.databaseName);
+   // console.log(Recipe.collection.collectionName);
+   // console.log('12345dfg')
     // Fetch all recipes from the MongoDB collection
     let recipes;
     // try {
-       recipes = await Recipe.find({}).limit(50);
-      console.log('12345');
+       recipes = await Recipe.find({});
+    //  console.log('12345');
       
     // } catch (error) {
     //   console.error('Error fetching recipes:', error);
     // }
    // console.log(recipes);
     // Return the recipes in the response
-    return NextResponse.json({ success: true, data: recipes });
+    return NextResponse.json( {recipes});
   } catch (error) {
     console.error('Error fetching recipes:', error);
 
