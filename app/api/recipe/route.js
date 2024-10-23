@@ -8,7 +8,7 @@ export async function GET(req) {
     let db = await connectToDatabase();
     console.log('mdcakmdcma')
     const recipes = await Recipe.find({}).limit(50);
-    console.log(recipes)
+    //console.log(recipes)
     return NextResponse.json({ recipes });
   } catch (error) {
     console.error(error);
