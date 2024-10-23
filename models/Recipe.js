@@ -1,4 +1,3 @@
-
 import mongoose from 'mongoose';
 
 const RecipeSchema = new mongoose.Schema({
@@ -29,6 +28,11 @@ const RecipeSchema = new mongoose.Schema({
     sugar: String,
     protein: String,
   },
-});
+}, {collection: 'recipes'});
 
-export default mongoose.models.Recipe || mongoose.model('recipe', RecipeSchema);
+// Use 'Recipe' as the model name
+const Recipe = mongoose.models.Recipe || mongoose.model('Recipe', RecipeSchema);
+
+
+export default Recipe;
+
