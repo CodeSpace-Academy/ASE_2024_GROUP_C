@@ -9,12 +9,22 @@ const RecipeGrid = () => {
 
   useEffect(() => {
     const fetchRecipes = async () => {
+      console.log('hdbachbdashcb')
       try {
+<<<<<<< HEAD
         const response = await fetch('http://localhost:3000/api/recipe',{cache:"no-store"});
         console.log(response)
         const data = await response.json();
         //console.log(data)
         setRecipes(data.data);
+=======
+        console
+        const response = await fetch('http://localhost:3000/api/recipe',{cache:"no-store"});
+        console.log(response)
+        const data = await response.json();
+        console.log(data)
+        setRecipes(data.recipes);
+>>>>>>> 42f520c0a8cb86287487baba5dc1e17f8e868ce0
       } catch (error) {
         console.error('Error fetching recipes:', error);
       }
