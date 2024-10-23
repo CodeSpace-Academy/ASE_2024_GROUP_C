@@ -4,13 +4,8 @@ import Link from 'next/link';
 
 const RecipeCard = ({ recipe }) => {
   return (
-<<<<<<< HEAD
-    <Link href={`/recipes/${recipe.id}`}>
-      <div className="bg-white shadow-md rounded-lg overflow-hidden">
-=======
     <Link href={`/recipes/${recipe._id}`}>
       <div  className="bg-white shadow-md rounded-lg overflow-hidden">
->>>>>>> 42f520c0a8cb86287487baba5dc1e17f8e868ce0
         <img src={recipe.images[0]} alt={recipe.title} className="w-full h-48 object-cover" />
         <div className="p-4">
           <h2 className="text-xl font-bold text-gray-800">{recipe.title}</h2>
