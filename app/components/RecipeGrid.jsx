@@ -29,11 +29,24 @@ const RecipeGrid = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+    <div className="max-w-7xl mx-auto">
+    {/* Grid Header */}
+    <div className="mb-12 text-center">
+      <h1 className="text-4xl font-bold text-gray-900 mb-4">
+        Recipe Rush
+      </h1>
+      <p className="text-gray-600 max-w-2xl mx-auto">
+        Discover our collection of easy-to-make recipes that are perfect for any occasion.
+      </p>
+    </div>
+
+    {/* Recipe Grid */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
       {recipes.map(recipe => (
-        <RecipeCard key={recipe.title} recipe={recipe} />
+        <RecipeCard key={recipe._id} recipe={recipe} />
       ))}
     </div>
+  </div>
   );
 };
 
