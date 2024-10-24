@@ -7,8 +7,8 @@ export async function GET(req) {
   try {
     let db = await connectToDatabase();
     console.log('mdcakmdcma')
-    const recipes = await Recipe.find({}).limit(50);
-    //console.log(recipes)
+    const recipes = await Recipe.find({}).limit(50).lean();
+    console.log(recipes[0])
     return NextResponse.json({ recipes });
   } catch (error) {
     console.error(error);
@@ -18,3 +18,7 @@ export async function GET(req) {
     return NextResponse.json({ success: false, error: 'Failed to fetch recipes' }, { status: 500 });
   }
 }
+
+
+
+
