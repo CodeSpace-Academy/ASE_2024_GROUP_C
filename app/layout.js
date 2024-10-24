@@ -1,3 +1,8 @@
+
+import Navbar from './components/Navbar';
+import ClientNavWrapper from './components/ClientNavWrapper';
+import Footer from './components/Footer';
+import './globals.css';
 'use client';
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
@@ -36,6 +41,14 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <body>
+        <ClientNavWrapper>
+          <Navbar />
+        </ClientNavWrapper>
+        <main className="min-h-screen pt-16">
+          {children}
+        </main>
+        <Footer />
       <Head>
         {/* Meta Tags for SEO and Mobile Responsiveness */}
         <meta
@@ -93,3 +106,7 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
+
+
+
